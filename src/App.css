@@ -1,4 +1,21 @@
+/* ダークモードボタン */
 #btn {
     display: block;
     margin: 0 0 0 auto;
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+/* 画像ファイル */
+#fileselect {
+    float: left;
+    margin-left: 20%;
+}
+
+#chart {
+    float: right;
+    width: 45%;
 }

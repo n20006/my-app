@@ -1,27 +1,20 @@
 import React from 'react'
 import './App.css'
-import DarkmodeSample from './DarkmodeTemplete'
+import { Button } from '@material-ui/core'
 import FileInputComponent from 'react-file-input-previews-base64'
-import {
-  ComposedChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip
-} from 'recharts'
+import DarkmodeSample from './components/DarkmodeTemplete'
+import ViewChart from './components/ViewChart'
 
-class App extends React.Component {
+class VisionApp extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { content: [], description: [], score: [] }
-    this.data = []
+    this.state = { content: [], data: [] }
     this.URI = 'https://vision.googleapis.com/v1/images:annotate?key='
-    this.KEY = 'xxxxxxxxxxxxxxxxxxxxxxx'
+    this.KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     this.FQDN = this.URI + this.KEY
   }
 
-  onChange (value) {
+  handleChange (value) {
     const base64 = value.replace('data:image/jpeg;base64,', '')
     this.setState({ content: base64 })
     this.SendRequest()
@@ -34,7 +27,11 @@ class App extends React.Component {
           features: [
             {
               type: 'LABEL_DETECTION',
-              maxResults: 1
+              maxResults: 5
+            },
+            {
+              type: 'OBJECT_LOCALIZATION',
+              maxResults: 5
             }
           ],
           image: {
@@ -56,57 +53,35 @@ class App extends React.Component {
     window
       .fetch(this.FQDN, param)
       .then(res => res.json())
-      .then(json => {
-        this.setState({
-          description: json.responses[0].labelAnnotations[0].description,
-          score: json.responses[0].labelAnnotations[0].score
-        })
-        this.data.push({
-          name: this.state.description,
-          value: this.state.score
-        })
-      })
+      .then(json => json.responses[0].labelAnnotations)
+      .then(json =>
+        json.map(v => ({ description: v.description, score: v.score }))
+      )
+      .then(v => this.setState({ data: v }))
+      .then(v => console.log(v))
+    console.log(this.state)
   }
 
   render () {
     return (
-      <>
+      <div>
         <DarkmodeSample />
-        <FileInputComponent
-          labelText='画像を選択'
-          labelStyle={{ fontSize: 14 }}
-          multiple={false}
-          callbackFunction={file => this.onChange(file.base64)}
-          accept='image/*'
-        />
-        {this.state.description}
-        <ViewChart data={this.data} />
-      </>
+        <h1>画像に含まれるオブジェクト</h1>
+        <div id='fileselect'>
+          <FileInputComponent
+            labelText=''
+            multiple={false}
+            callbackFunction={file => this.handleChange(file.base64)}
+            buttonComponent={<Button variant='contained'>SelectFile</Button>}
+            accept='image/*'
+          />
+        </div>
+        <div id='chart'>
+          <ViewChart data={this.state.data} />
+        </div>
+      </div>
     )
   }
 }
 
-const ViewChart = props => {
-  return (
-    <ComposedChart
-      layout='vertical'
-      width={500}
-      height={400}
-      data={props.data}
-      margin={{
-        top: 20,
-        right: 20,
-        bottom: 150,
-        left: 20
-      }}
-    >
-      <CartesianGrid stroke='#f5f5f5' />
-      <XAxis type='number' />
-      <YAxis datakey='name' type='category' />
-      <Tooltip />
-      <Bar dataKey='value' barSize={15} fill='#413ea0' />
-    </ComposedChart>
-  )
-}
-
-export default App
+export default VisionApp
