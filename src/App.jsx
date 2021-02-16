@@ -10,7 +10,7 @@ class VisionApp extends React.Component {
     super(props)
     this.state = { content: [], data: [] }
     this.URI = 'https://vision.googleapis.com/v1/images:annotate?key='
-    this.KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    this.KEY = 'xxxxxxxxxxxxxxxxx'
     this.FQDN = this.URI + this.KEY
   }
 
@@ -72,7 +72,11 @@ class VisionApp extends React.Component {
             labelText=''
             multiple={false}
             callbackFunction={file => this.handleChange(file.base64)}
-            buttonComponent={<Button variant='contained'>SelectFile</Button>}
+            buttonComponent={
+              <Button variant='outlined' color='secondary'>
+                SelectFile
+              </Button>
+            }
             accept='image/*'
           />
         </div>
