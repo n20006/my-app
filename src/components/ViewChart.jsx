@@ -24,7 +24,7 @@ const ViewChart = props => {
       }}
     >
       <CartesianGrid stroke='#f5f5f5' />
-      <XAxis type='number' />
+      <XAxis type='number' unit='%' />
       <YAxis dataKey='description' type='category' />
       <Tooltip />
       <Bar dataKey='score' barSize={15} fill='#413ea0' />

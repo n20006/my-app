@@ -10,7 +10,7 @@ class VisionApp extends React.Component {
     super(props)
     this.state = { content: [], data: [] }
     this.URI = 'https://vision.googleapis.com/v1/images:annotate?key='
-    this.KEY = 'xxxxxxxxxxxxxxxxx'
+    this.KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     this.FQDN = this.URI + this.KEY
   }
 
@@ -20,6 +20,7 @@ class VisionApp extends React.Component {
     this.SendRequest()
   }
 
+  // リクエスト情報
   SendRequest () {
     const body = JSON.stringify({
       requests: [
@@ -50,12 +51,13 @@ class VisionApp extends React.Component {
       body: body
     }
 
+    // レスポンス
     window
       .fetch(this.FQDN, param)
       .then(res => res.json())
       .then(json => json.responses[0].labelAnnotations)
       .then(json =>
-        json.map(v => ({ description: v.description, score: v.score }))
+        json.map(v => ({ description: v.description, score: v.score * 100 }))
       )
       .then(v => this.setState({ data: v }))
       .then(v => console.log(v))
