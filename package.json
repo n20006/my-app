@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "homepage": "https://n20006.github.io/my-app",
-  "env": "GOOGLE_CLOUD_VISION_API_KEY",
+  "env": ${{GOOGLE_CLOUD_VISION_API_KEY}},
   "private": true,
   "dependencies": {
     "@google-cloud/storage": "^5.7.4",
