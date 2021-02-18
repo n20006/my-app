@@ -10,8 +10,7 @@ class VisionApp extends React.Component {
     super(props)
     this.state = { content: [], data: [] }
     this.URI = 'https://vision.googleapis.com/v1/images:annotate?key='
-    this.KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    this.FQDN = this.URI + this.KEY
+    this.FQDN = this.URI + process.env.GOOGLE_CLOUD_VISION_API_KEY
   }
 
   handleChange (value) {
