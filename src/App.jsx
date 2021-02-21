@@ -10,7 +10,7 @@ class VisionApp extends React.Component {
     super(props)
     this.state = { content: [], data: [] }
     this.URI = 'https://vision.googleapis.com/v1/images:annotate?key='
-    this.KEY = process.env.GOOGLE_CLOUD_VISION_API_KEY
+    this.KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     this.FQDN = this.URI + this.KEY
   }
 
@@ -28,10 +28,6 @@ class VisionApp extends React.Component {
           features: [
             {
               type: 'LABEL_DETECTION',
-              maxResults: 5
-            },
-            {
-              type: 'OBJECT_LOCALIZATION',
               maxResults: 5
             }
           ],
