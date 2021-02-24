@@ -9,11 +9,12 @@ class VisionApp extends React.Component {
   constructor (props) {
     super(props)
     this.state = { content: [], data: [] }
+    this.KEY = process.env.REACT_APP_APIKEY
     this.URI = 'https://vision.googleapis.com/v1/images:annotate?key='
-    this.KEY = process.env.GOOGLE_CLOUD_VISION_APIKEY
     this.FQDN = this.URI + this.KEY
   }
 
+  // 画像データ
   handleChange (value) {
     const base64 = value.replace('data:image/jpeg;base64,', '')
     this.setState({ content: base64 })
@@ -60,6 +61,7 @@ class VisionApp extends React.Component {
     console.log(this.state)
   }
 
+  // 表示
   render () {
     return (
       <div>
