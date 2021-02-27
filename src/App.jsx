@@ -57,8 +57,6 @@ class VisionApp extends React.Component {
         json.map(v => ({ description: v.description, score: v.score * 100 }))
       )
       .then(v => this.setState({ data: v }))
-      .then(v => console.log(v))
-    console.log(this.state)
   }
 
   // 表示

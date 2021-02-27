@@ -9,7 +9,6 @@ import {
 } from 'recharts'
 
 const ViewChart = props => {
-  console.log(props.data)
   return (
     <ComposedChart
       layout='vertical'
